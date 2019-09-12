@@ -28,7 +28,7 @@ namespace LazyParser
     {
         public enum EmptyParameter { Throw, Ignore, Default }
 
-        public struct ParamData
+        public class ParamData
         {
             public string Name { get; internal set; }
 
@@ -42,7 +42,7 @@ namespace LazyParser
                 }
             }
 
-            public bool DoubleDensity;
+            public bool DoubleDensity { get; set; }
         }
 
         public Command(string command, EmptyParameter emptyParameterAction)
@@ -82,8 +82,7 @@ namespace LazyParser
             string originalCommand = command;
             List<string> args = new List<string>();
             List<string> param = new List<string>();
-            string name = cmd.SubstringByChar(0, ' ', true, out cmd);
-
+            string name = cmd.SubstringByChar(0, ' ', true, out cmd) ?? originalCommand;
             if (cmd.SubstrCount("\\\"") % 2 == 0)
             {
                 cmd = cmd.Replace("\\\"", ((char)0x001F).ToString());

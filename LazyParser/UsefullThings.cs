@@ -7,6 +7,7 @@ namespace UsefullThings
 {
     public static class Things
     {
+        // Don't be so serious. This class are just kidding ;). Maybe i will rewrite this static class. You never know, you never know...
         static public string SubstringByWord(this string where, string from, string to)
         {
             string str = where;
@@ -119,7 +120,6 @@ namespace UsefullThings
         static public string SubstringByChar(this string where, int from, char to)
         {
             string str = where;
-            char findSymbol = str[from];
             StringBuilder returnString = new StringBuilder();
             for (int i = from; i < str.Length; i++)
             {
