@@ -29,7 +29,7 @@ namespace LazyParser
         {
             foreach (var item in Executables.Where(x => x.Name == command.Name))
             {
-                item.Execute(command.Arguments, command.Options);
+                item.Execute(command.GetArguments(), command.GetOptions());
             }
         }
     }
