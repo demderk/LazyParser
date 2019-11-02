@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazyParser", "LazyParser\La
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTests", "ConsoleTests\ConsoleTests.csproj", "{861838F7-3860-4CF0-83AD-AF2A3ECC0179}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazyParser.Tests", "Tests\LazyParser.Tests.csproj", "{E4CE26A5-404E-4252-9FF9-70FA8D5EE5D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B474B8F2-7C44-4D38-945A-A858CCE22132}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +25,16 @@ Global
 		{861838F7-3860-4CF0-83AD-AF2A3ECC0179}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{861838F7-3860-4CF0-83AD-AF2A3ECC0179}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{861838F7-3860-4CF0-83AD-AF2A3ECC0179}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4CE26A5-404E-4252-9FF9-70FA8D5EE5D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4CE26A5-404E-4252-9FF9-70FA8D5EE5D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4CE26A5-404E-4252-9FF9-70FA8D5EE5D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4CE26A5-404E-4252-9FF9-70FA8D5EE5D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E4CE26A5-404E-4252-9FF9-70FA8D5EE5D0} = {B474B8F2-7C44-4D38-945A-A858CCE22132}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8FC9A40A-DDD0-46B8-93C9-D5C675893441}
