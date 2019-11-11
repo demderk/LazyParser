@@ -23,9 +23,9 @@ namespace LazyParser
         private void Parser(string inputCommand)
         {
             string tempCommand = string.Copy(inputCommand);
-            Regex optionsRegex = new Regex(@"\s+[-]\w+(\s[""].+?[""]|\s[a-zA-z_0-9.,]+\s*?|\s*?)");
-            Regex fullOptionsRegex = new Regex(@"\s+[-]{2}\w+(\s[""].+?[""]|\s[a-zA-z_0-9.,]+\s*?|\s*?)");
-            Regex argumentsRegex = new Regex(@"\s([^""'\s-]+|[""'][^""']+[""'])\s*?");
+            Regex optionsRegex = new Regex(@"\s+[-]\w+(\s[""].+?[""]|(\s[a-zA-z_0-9.,]+)+|\s*?)");
+            Regex fullOptionsRegex = new Regex(@"\s+[-]{2}\w+(\s[""].+?[""]|(\s[a-zA-z_0-9.,]+)+|\s*?)");
+            Regex argumentsRegex = new Regex(@"\s([^""'\s]+|[""'][^""']+[""'])\s*?");
             Regex quotesRegex = new Regex(@"([""].+?[""]|['].+?['])\s*?");
 
             string[] quotesArray = quotesRegex.Matches(tempCommand).Cast<Match>().Select(x => x.Value).ToArray();
@@ -57,7 +57,7 @@ namespace LazyParser
             tempCommand = optionsRegex.Replace(tempCommand, "");
 
             SortedDictionary<int, string> tempArgumentsDictionary = new SortedDictionary<int, string>();
-            string[] simpleArguments = argumentsRegex.Matches(tempCommand).Cast<Match>().Select(x => x.Value.Trim(' ')).ToArray();
+            string[] simpleArguments = argumentsRegex.Matches(tempCommand).Cast<Match>().Select(x => x.Value.Trim(' ')).Except(new string[] { "--", "&&", "||" }).ToArray();
             foreach (var item in simpleArguments)
             {
                 tempArgumentsDictionary.Add(inputCommand.IndexOf(item), item);
@@ -103,12 +103,12 @@ namespace LazyParser
             }
             return result.ToArray();
         }
-        
+
         public string[] GetOptionSource()
         {
             return GetOptions().Select(x => x.ToString()).ToArray();
         }
-        
+
         public string[] GetArguments()
         {
             return Arguments.ToArray();
