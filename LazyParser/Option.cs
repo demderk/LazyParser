@@ -4,13 +4,18 @@ using System.Text;
 
 namespace LazyParser
 {
-    public class Option
+    public sealed class Option
     {
         public Option(string option)
         {
             string[] optionInfo = option.Split(' ');
             Name = optionInfo[0];
             Data = string.Join(' ',optionInfo[1..]);
+        }
+
+        public Option(string option, bool isFullName) : this(option)
+        {
+            IsFullName = isFullName;
         }
 
         public string Name { get; }

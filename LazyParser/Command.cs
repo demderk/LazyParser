@@ -23,8 +23,8 @@ namespace LazyParser
         private void Parser(string inputCommand)
         {
             string tempCommand = string.Copy(inputCommand);
-            Regex optionsRegex = new Regex(@"\s+[-]\w+(\s[""].+?[""]|(\s[a-zA-z_0-9.,]+)+|\s*?)");
-            Regex fullOptionsRegex = new Regex(@"\s+[-]{2}\w+(\s[""].+?[""]|(\s[a-zA-z_0-9.,]+)+|\s*?)");
+            Regex optionsRegex = new Regex(@"\s+[-][^\s-]+(\s[""].+?[""]|(\s[^-][^\s]+)+|\s*?)");
+            Regex fullOptionsRegex = new Regex(@"\s+[-]{2}[^\s]+(\s[""].+?[""]|(\s[^-][^\s]+)+|\s*?)");
             Regex argumentsRegex = new Regex(@"\s([^""'\s]+|[""'][^""']+[""'])\s*?");
             Regex quotesRegex = new Regex(@"([""].+?[""]|['].+?['])\s*?");
 
@@ -52,9 +52,11 @@ namespace LazyParser
             }
             tempCommand = tempCommand.Trim(' ');
 
-            Name = new Regex(@"\w+\s*?").Match(tempCommand).Value.Trim(' ');
+            Name = new Regex(@"\S+\s*?").Match(tempCommand).Value.Trim(' ');
             Options.AddRange(optionsRegex.Matches(tempCommand).Cast<Match>().Select(x => new Option(x.Value.Trim(new char[] { ' ', '-' }))));
+            Options.AddRange(fullOptionsRegex.Matches(tempCommand).Cast<Match>().Select(x => new Option(x.Value.Trim(new char[] { ' ', '-' }), true)));
             tempCommand = optionsRegex.Replace(tempCommand, "");
+            tempCommand = fullOptionsRegex.Replace(tempCommand, "");
 
             SortedDictionary<int, string> tempArgumentsDictionary = new SortedDictionary<int, string>();
             string[] simpleArguments = argumentsRegex.Matches(tempCommand).Cast<Match>().Select(x => x.Value.Trim(' ')).Except(new string[] { "--", "&&", "||" }).ToArray();
