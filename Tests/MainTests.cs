@@ -68,7 +68,11 @@ namespace LazyParser.Tests
             new object[] {@"sudo date --set=""30 December 2013 10:00:00""","sudo","date",@"--set=""30 December 2013 10:00:00"""},
             new object[] {@"ln -s /var/www/ ~/www","ln","","-s /var/www/ ~/www"},
             new object[] {"apt-cache search nvidia-[0-9]","apt-cache","search,nvidia-[0-9]",""},
-            // new object[] {},
+            new object[] {"sudo add-apt-repository ppa:graphics-drivers","sudo","add-apt-repository,ppa:graphics-drivers",""},
+            new object[] { "sudo apt-get install nvidia-XYXYX", "sudo", "apt-get,install,nvidia-XYXYX", ""},
+            new object[] { "dpkg -L nvidia-driver-390", "dpkg", "", "-L nvidia-driver-390"},
+            new object[] {"sudo chown -R $USER:$USER /var/www/sampledomain.com/html","sudo","chown","-R $USER:$USER /var/www/sampledomain.com/html"},
+           // new object[] {},
         };
 
         public IEnumerator<object[]> GetEnumerator() => AllTests.GetEnumerator();
