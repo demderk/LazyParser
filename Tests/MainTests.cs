@@ -9,6 +9,12 @@ namespace LazyParser.Tests
 {
     public class MainTests
     {
+        [Fact]
+        public void Test1() 
+        {
+            
+        }
+
         [Theory]
         [ClassData(typeof(CommandsForTests))]
 #pragma warning disable IDE0051 // Remove unused private members
