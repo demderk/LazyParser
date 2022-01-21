@@ -4,16 +4,16 @@ using System.Text;
 
 namespace LazyParser
 {
-    public sealed class Option
+    public sealed class CommandOption
     {
-        public Option(string option)
+        public CommandOption(string option)
         {
             string[] optionInfo = option.Split(' ');
             Name = optionInfo[0];
             Data = string.Join(' ',optionInfo[1..]);
         }
 
-        public Option(string option, bool isFullName) : this(option)
+        public CommandOption(string option, bool isFullName) : this(option)
         {
             IsFullName = isFullName;
         }

@@ -5,32 +5,46 @@ using System.Linq;
 
 namespace LazyParser
 {
-    class CommandProcessor
+    public class CommandProcessor
     {
-        private List<IExecutable> Executables => new List<IExecutable>();
-
+        private List<IExecutableCommand> Executables = new List<IExecutableCommand>();
 
         public CommandProcessor()
         {
 
         }
 
-        public CommandProcessor(params IExecutable[] executables)
+        public CommandProcessor(params IExecutableCommand[] executables)
         {
             Executables.AddRange(executables);
         }
 
-        public void AddExecuteble(IExecutable executable)
+        public void AddExecuteble(IExecutableCommand executable)
         {
             Executables.Add(executable);
         }
 
+        public void RemoveExecuteble(IExecutableCommand executable)
+        {
+            Executables.Remove(executable);
+        }
+
+        public IExecutableCommand[] GetExecutables()
+        {
+            return Executables.ToArray();
+        }
+
         public void Invoke(Command command)
         {
-            foreach (var item in Executables.Where(x => x.Name == command.Name))
-            {
-                item.Execute(command.GetArguments(), command.GetOptions());
-            }
+            Executables.Where(x => x.CommandName == command.Name)
+                       .FirstOrDefault()
+                       ?.CommandExecute(command.GetArguments(), command.GetOptions());
+        }
+
+        public void Invoke(string str)
+        {
+            Command command = new Command(str);
+            Invoke(command);
         }
     }
 }

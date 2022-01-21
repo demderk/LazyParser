@@ -17,7 +17,7 @@ namespace LazyParser
 
         private List<string> Arguments { get; } = new List<string>();
 
-        private List<Option> Options { get; } = new List<Option>();
+        private List<CommandOption> Options { get; } = new List<CommandOption>();
 
 
         private void Parser(string inputCommand)
@@ -53,8 +53,8 @@ namespace LazyParser
             tempCommand = tempCommand.Trim(' ');
 
             Name = new Regex(@"\S+\s*?").Match(tempCommand).Value.Trim(' ');
-            Options.AddRange(optionsRegex.Matches(tempCommand).Cast<Match>().Select(x => new Option(x.Value.Trim(new char[] { ' ', '-' }))));
-            Options.AddRange(fullOptionsRegex.Matches(tempCommand).Cast<Match>().Select(x => new Option(x.Value.Trim(new char[] { ' ', '-' }), true)));
+            Options.AddRange(optionsRegex.Matches(tempCommand).Cast<Match>().Select(x => new CommandOption(x.Value.Trim(new char[] { ' ', '-' }))));
+            Options.AddRange(fullOptionsRegex.Matches(tempCommand).Cast<Match>().Select(x => new CommandOption(x.Value.Trim(new char[] { ' ', '-' }), true)));
             tempCommand = optionsRegex.Replace(tempCommand, "");
             tempCommand = fullOptionsRegex.Replace(tempCommand, "");
 
@@ -116,7 +116,7 @@ namespace LazyParser
             return Arguments.ToArray();
         }
 
-        public Option[] GetOptions()
+        public CommandOption[] GetOptions()
         {
             return Options.ToArray();
         }
@@ -126,9 +126,62 @@ namespace LazyParser
             return Arguments.Contains(argument);
         }
 
-        public bool HasOption(string option)
+        public string GetArgument(string argument)
         {
-            return Options.Select(x => x.Name).Contains(option);
+            return HasArgument(argument) ? argument : null;
+        }
+
+        public bool HasOption(string optionName)
+        {
+            return Options.Select(x => x.Name).Contains(optionName);
+        }
+
+        public bool HasOption(string optionName, bool isFull)
+        {
+            foreach (var item in Options)
+            {
+                if (item.Name == optionName && item.IsFullName == isFull)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public CommandOption[] GetOptions(string optionName)
+        {
+            List<CommandOption> result = new List<CommandOption>();
+            foreach (var item in Options)
+            {
+                if (item.Name == optionName)
+                {
+                    result.Add(item);
+                }
+            }
+            return result.ToArray();
+        }
+
+        public CommandOption[] GetOptions(string optionName, bool isFull)
+        {
+            List<CommandOption> result = new List<CommandOption>();
+            foreach (var item in Options)
+            {
+                if (item.Name == optionName && item.IsFullName == isFull)
+                {
+                    result.Add(item);
+                }
+            }
+            return result.ToArray();
+        }
+
+        public CommandOption GetFirstOption(string optionName)
+        {
+            return GetOptions(optionName).FirstOrDefault();
+        }
+
+        public CommandOption GetFirstOption(string optionName, bool isFull)
+        {
+            return GetOptions(optionName, isFull).FirstOrDefault();
         }
 
     }
